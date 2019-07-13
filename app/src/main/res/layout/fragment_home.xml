@@ -38,7 +38,7 @@
             android:textStyle="bold"
             android:text="Notifire 1"/>
         <ImageView
-            android:id="@+id/statusAman"
+            android:id="@+id/statusNotifire"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_below="@id/namaNotifire"
@@ -46,10 +46,10 @@
             android:layout_marginTop="10dp"
             app:srcCompat="@drawable/ic_action_status_aman"/>
         <TextView
-            android:id="@+id/labelStatusAman"
+            android:id="@+id/labelStatusNotifire"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/statusAman"
+            android:layout_below="@id/statusNotifire"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:text="Status: Aman"

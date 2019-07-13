@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -20,15 +21,21 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity implements HomeFragmentNoDevice.FragmentListener,
         DevicesFragment.FragmentListener,AddDeviceFragment.FragmentListener{
 
     BottomNavigationView bottomNavigationView;
     String title="Home",latitude="",longitude="";
-
+    ArrayList<NotifireDevice> notifireDevices = new ArrayList<>();
     //FusedLocationProviderClient client;
 
     @Override
@@ -40,11 +47,76 @@ public class HomeActivity extends AppCompatActivity implements HomeFragmentNoDev
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(title);
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("");
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragmentNoDevice()).commit();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("user/adi123");
+        reference.child("device").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue() == null){
+                    getSupportFragmentManager().beginTransaction().
+                            replace(R.id.fragment_container,new HomeFragmentNoDevice()).commit();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        reference.child("device").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    //namaDevice.add(dataSnapshot.child("nama_devi ce").getValue().toString());
+                    final String namaDevice = dataSnapshot.child("nama_device").getValue().toString();
+                    String key = dataSnapshot.getKey();
+                    //final String statusDevice="";
+                    DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("alat");
+                    reference1.child(key).child("situasi").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            String statusDevice = dataSnapshot.getValue().toString();
+                            NotifireDevice notifireDevice = new NotifireDevice(namaDevice,statusDevice);
+                            for(NotifireDevice notifireDeviceIterator:notifireDevices){
+                                if(notifireDeviceIterator.getNamaDevice().equals(notifireDevice.getNamaDevice())){
+                                    notifireDeviceIterator.setStatusDevice(statusDevice);
+                                    return;
+                                }
+                            }
+                            notifireDevices.add(notifireDevice);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                    //notifireDevices.add()
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+        //bottomNavigationView.setSelectedItemId(R.id.nav_home);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -61,7 +133,12 @@ public class HomeActivity extends AppCompatActivity implements HomeFragmentNoDev
                         title="History";
                         break;
                     case R.id.nav_home:
-                        selected = new HomeFragment();
+                        if(notifireDevices.isEmpty()){
+                            selected = new HomeFragmentNoDevice();
+                        }
+                        else {
+                            selected = new HomeFragment();
+                        }
                         title="Home";
                         break;
 
@@ -73,6 +150,8 @@ public class HomeActivity extends AppCompatActivity implements HomeFragmentNoDev
                 return true;
             }
         });
+
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
     }
 
     @Override
@@ -81,6 +160,10 @@ public class HomeActivity extends AppCompatActivity implements HomeFragmentNoDev
         if(fragment instanceof HomeFragmentNoDevice){
             HomeFragmentNoDevice homeFragmentNoDevice = (HomeFragmentNoDevice) fragment;
             homeFragmentNoDevice.setFragmentListener(this);
+        }
+        else if(fragment instanceof HomeFragment){
+            HomeFragment homeFragment = (HomeFragment) fragment;
+            homeFragment.setData(notifireDevices);
         }
         else if(fragment instanceof  DevicesFragment){
             DevicesFragment devicesFragment = (DevicesFragment) fragment;
@@ -137,6 +220,10 @@ public class HomeActivity extends AppCompatActivity implements HomeFragmentNoDev
         reference = reference.child("device").child(idNotifire);
         reference.child("nama_device").setValue(namaNotifire);
 
+        Toast.makeText(getApplicationContext(),"Device berhasil ditambahkan",Toast.LENGTH_SHORT).show();
+        NotifireDevice notifireDevice = new NotifireDevice(namaNotifire,"1");
+        notifireDevices.add(notifireDevice);
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
     }
 
     @Override
