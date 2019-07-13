@@ -11,25 +11,38 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-
+//
 ///**
 // * A simple {@link Fragment} subclass.
 // * Activities that contain this fragment must implement the
-// * {@link HomeFragmentNoDevice.OnFragmentInteractionListener} interface
+// * {@link AddDeviceFragment.OnFragmentInteractionListener} interface
 // * to handle interaction events.
-// * Use the {@link HomeFragmentNoDevice#newInstance} factory method to
+// * Use the {@link AddDeviceFragment#newInstance} factory method to
 // * create an instance of this fragment.
 // */
-public class HomeFragmentNoDevice extends Fragment {
+public class AddDeviceFragment extends Fragment {
 
-    Button addDevice;
+    Button save;
     FragmentListener fragmentListener;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //return super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_home_fragment_no_device,container,false);
+        return inflater.inflate(R.layout.fragment_add_device,container,false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        save = view.findViewById(R.id.buttonSave);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentListener.saveButtonClicked();
+            }
+        });
     }
 
 
@@ -37,22 +50,7 @@ public class HomeFragmentNoDevice extends Fragment {
         this.fragmentListener = fragmentListener;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        addDevice = view.findViewById(R.id.buttonAddDevice);
-
-        addDevice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragmentListener.addDeviceClicked();
-            }
-        });
-    }
-
     public interface FragmentListener{
-        public void addDeviceClicked();
+        public void saveButtonClicked();
     }
-
 }
