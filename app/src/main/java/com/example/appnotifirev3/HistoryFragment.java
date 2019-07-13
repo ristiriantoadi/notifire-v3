@@ -14,16 +14,16 @@ import android.view.ViewGroup;
 ///**
 // * A simple {@link Fragment} subclass.
 // * Activities that contain this fragment must implement the
-// * {@link HomeFragment.OnFragmentInteractionListener} interface
+// * {@link HistoryFragment.OnFragmentInteractionListener} interface
 // * to handle interaction events.
-// * Use the {@link HomeFragment#newInstance} factory method to
+// * Use the {@link HistoryFragment#newInstance} factory method to
 // * create an instance of this fragment.
 // */
-public class HomeFragment extends Fragment {
+public class HistoryFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //return super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_home,container,false);
+        return inflater.inflate(R.layout.fragment_history,container,false);
     }
 }
