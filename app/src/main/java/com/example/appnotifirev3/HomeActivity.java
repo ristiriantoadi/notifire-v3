@@ -21,7 +21,7 @@ public class HomeActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle(title);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragmentNoDevice()).commit();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
