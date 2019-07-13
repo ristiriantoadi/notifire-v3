@@ -14,22 +14,53 @@
         android:layout_marginTop="20dp"
         android:textSize="18sp"
         android:text="Id Device" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:text="1" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <TextView
+            android:id="@+id/idNotifire"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textSize="14sp"
+            android:text="-" />
+        <Button
+            android:id="@+id/buttonScan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Scan QR Code"
+            android:layout_alignParentRight="true"
+            android:backgroundTint="#FFC900"/>
+
+    </RelativeLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:textSize="18sp"
         android:text="Lokasi"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Lat: 18, Lang:191929"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/lokasiLatitudeLangitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@id/updateLokasi"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"
+            android:text="-"/>
+        <Button
+            android:id="@+id/updateLokasi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="Update Lokasi"
+            android:backgroundTint="#FFC900" />
+    </RelativeLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,6 +68,7 @@
         android:textSize="18sp"
         android:text="Nama Device"/>
     <EditText
+        android:id="@+id/namaNotifire"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"/>
