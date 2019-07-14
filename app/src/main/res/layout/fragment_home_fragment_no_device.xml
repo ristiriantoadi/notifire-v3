@@ -6,23 +6,16 @@
     tools:context=".HomeFragmentNoDevice">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/noDeviceLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Anda belum memiliki device"
-        android:textSize="16sp"/>
     <Button
         android:id="@+id/buttonAddDevice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/noDeviceLabel"
         android:layout_marginTop="5dp"
         android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:paddingHorizontal="10dp"
-        android:text="Tambah Device"
+        android:text="Daftarkan Device Pertama"
+        android:textColor="#fff"
         android:background="#FFE43715"/>
 
 

@@ -54,6 +54,16 @@
             android:layout_marginTop="10dp"
             android:text="Status: Aman"
             android:textSize="14sp"/>
+        <Button
+            android:id="@+id/buttonTelepon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/labelStatusNotifire"
+            android:layout_marginTop="20dp"
+            android:text="Hubungi Pemadam Kebakaran"
+            android:textColor="#fff"
+            android:backgroundTint="#FB0200"/>
     </RelativeLayout>
 
 </RelativeLayout>

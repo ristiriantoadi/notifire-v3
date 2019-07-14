@@ -16,12 +16,12 @@ import android.widget.Toast;
 ///**
 // * A simple {@link Fragment} subclass.
 // * Activities that contain this fragment must implement the
-// * {@link DevicesFragment.OnFragmentInteractionListener} interface
+// * {@link DevicesFragmentNoDevice.OnFragmentInteractionListener} interface
 // * to handle interaction events.
-// * Use the {@link DevicesFragment#newInstance} factory method to
+// * Use the {@link DevicesFragmentNoDevice#newInstance} factory method to
 // * create an instance of this fragment.
 // */
-public class DevicesFragment extends Fragment {
+public class DevicesFragmentNoDevice extends Fragment {
 
     FloatingActionButton button;
     FragmentListener fragmentListener;
